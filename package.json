@@ -7,8 +7,10 @@
   "author": "Guru",
   "type": "commonjs",
   "scripts": {
-    "test": "jest",
-    "start": "parcel index.html"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "parcel": "^2.16.3",
