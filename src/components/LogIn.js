@@ -4,7 +4,7 @@ import { Validate } from "../utils/Validate";
 
 const LogIn = () => {
   const [isSignInForm, setisSingIn] = useState(true);
-  const [ErrorMessage,setErrorMessage]=useState(null);
+  const [ErrorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
 
@@ -75,10 +75,21 @@ const LogIn = () => {
         </button>
         <p className="py-2 mt-4 mx-2 cursor-pointer" onClick={toggleSignIn}>
           {isSignInForm
-            ? "New to Netflix ? Create an account."
+            ? "New to StreamX ? Create an account."
             : "Already a user LogIn Now !"}
         </p>
       </form>
+      <p
+        style={{
+          fontSize: "12px",
+          color: "#999",
+          textAlign: "center",
+          marginTop: "20px",
+        }}
+      >
+        Disclaimer: This project is for educational purposes only and is not
+        affiliated with Netflix.
+      </p>
     </div>
   );
 };

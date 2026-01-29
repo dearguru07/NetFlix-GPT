@@ -11,3 +11,5 @@ export const Validate = (email, password) => {
 };
 
 // (\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)
+
+

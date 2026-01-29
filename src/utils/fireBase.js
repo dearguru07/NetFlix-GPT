@@ -19,3 +19,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+
+// {
+//   "hosting": {
+//     "public": "build",
+//     "ignore": [
+//       "firebase.json",
+//       "**/.*",
+//       "**/node_modules/**"
+//     ]
+//   }
+// }
