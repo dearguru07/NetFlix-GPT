@@ -1,23 +1,88 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { Validate } from "../utils/Validate";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/fireBase";
+import { auth } from "../utils/fireBase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { user_AVATHAR } from "../utils/constants";
 
 const LogIn = () => {
-  const [isSignInForm, setisSingIn] = useState(true);
+  const [isSignInForm, setisSignInForm] = useState(true);
   const [ErrorMessage, setErrorMessage] = useState(null);
+  const dispatch = useDispatch();
+
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const toggleSignIn = () => {
-    setisSingIn(!isSignInForm);
+    setisSignInForm(!isSignInForm);
   };
-  const handleButtonClick = () => {
-    // validations here...
-    console.log(email.current.value);
-    console.log(password.current.value);
 
-    const msg = Validate(email.current.value, password.current.value);
-    setErrorMessage(msg);
+  const handleButtonClick = () => {
+
+    const message = Validate(email.current.value, password.current.value);
+    setErrorMessage(message);
+    if (message) return;
+
+    if (!isSignInForm) {
+      // Sign Up logic;
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: user_AVATHAR,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                }),
+              );
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      // Sign In logic
+      // const auth = getAuth();
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
   };
   return (
     <div>
@@ -38,6 +103,7 @@ const LogIn = () => {
         </h1>
         {!isSignInForm && (
           <input
+            ref={name}
             className="px-4 py-3 mb-4 outline-none w-full text-white  border-2 transition-colors duration-100 border-solid focus:border-[#5582f7] border-[#5e6065]"
             name="text"
             placeholder="Full Name"

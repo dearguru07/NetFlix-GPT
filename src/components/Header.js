@@ -1,7 +1,64 @@
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { auth } from "../utils/fireBase";
+import { Logo_URL } from "../utils/constants";
+import { addUser, removeUser } from "../utils/userSlice";
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {
+        navigate("/error");
+      });
+  };
+
+  useEffect(() => {
+    const unSubcribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return () => unSubcribe();
+  }, []);
+
   return (
-    <div className="w-40 absolute ml-20 mt-5 bg-linear-to-b from to-black z-10">
-        <img src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2026-01-09/consent/87b6a5c0-0104-4e96-a291-092c11350111/019ae4b5-d8fb-7693-90ba-7a61d24a8837/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" className='w-full' alt='logo'/>
+    <div className="w-full absolute bg-linear-to-t from to-black z-10 justify-between flex">
+      <img
+        className="w-40 ml-20 mt-3"
+        src={Logo_URL}
+        alt="logo"
+      />
+
+      {user && (
+        <div className="flex items-center mr-10">
+          <img className="w-12 h-10" src={user?.photoURL}></img>
+          <button
+            onClick={handleSignOut}
+            className="text-white m-5 font-bold bg-red-400 cursor-pointer p-2 rounded-sm"
+          >
+            Sign Out
+          </button>
+        </div>
+      )}
     </div>
   );
 };

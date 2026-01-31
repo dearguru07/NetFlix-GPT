@@ -8,13 +8,14 @@ const Body = () => {
   const roots = createBrowserRouter([
     {
       path: "/",
-      element: <LogIn/>,
+      element: <LogIn />,
     },
     {
       path: "/browse",
       element: <Browse />,
     },
   ]);
+
   return (
     <div>
       <RouterProvider router={roots} />
