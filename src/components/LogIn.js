@@ -145,7 +145,7 @@ const LogIn = () => {
             : "Already a user LogIn Now !"}
         </p>
       </form>
-      <p
+      {/* <p
         style={{
           fontSize: "12px",
           color: "#999",
@@ -155,7 +155,7 @@ const LogIn = () => {
       >
         Disclaimer: This project is for educational purposes only and is not
         affiliated with Netflix.
-      </p>
+      </p> */}
     </div>
   );
 };
