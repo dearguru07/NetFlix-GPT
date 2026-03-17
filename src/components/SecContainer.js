@@ -8,8 +8,8 @@ const SecContainer = () => {
   return (
     movies.nowPlayingMovies && (
       <div className="bg-black">
-        <div className="-mt-90 relative z-10 ">
-          <div className="opacity-50">
+        <div className="-mt-94 relative z-10 ">
+          <div className="opacity-70">
             <MovieList
               title={"Now Playing Movies"}
               movies={movies.nowPlayingMovies}
