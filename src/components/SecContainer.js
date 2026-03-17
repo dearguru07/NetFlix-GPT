@@ -6,9 +6,36 @@ import { useSelector } from "react-redux";
 const SecContainer = () => {
   const movies = useSelector((store) => store.movies);
   return (
-    <div>
-      <MovieList title={"Now Playing Movies"} movies={movies.nowPlayingMovies} />
-    </div>
+    movies.nowPlayingMovies && (
+      <div className="bg-black">
+        <div className="-mt-90 relative z-10 ">
+          <div className="opacity-50">
+            <MovieList
+              title={"Now Playing Movies"}
+              movies={movies.nowPlayingMovies}
+            />
+          </div>
+          <MovieList
+            title={"Populor Movies"}
+            movies={movies.nowPlayingMovies}
+          />
+          <MovieList
+            title={"UpComing Movies"}
+            movies={movies.nowPlayingMovies}
+          />
+          <MovieList title={"Horror Movies"} movies={movies.nowPlayingMovies} />
+          <MovieList
+            title={"Trending Movies"}
+            movies={movies.nowPlayingMovies}
+          />
+          <MovieList title={"Comedy Movies"} movies={movies.nowPlayingMovies} />
+          <MovieList
+            title={"Action && Drama"}
+            movies={movies.nowPlayingMovies}
+          />
+        </div>
+      </div>
+    )
   );
 };
 
