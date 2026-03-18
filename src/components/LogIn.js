@@ -11,7 +11,7 @@ import { auth } from "../utils/fireBase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { user_AVATHAR } from "../utils/constants";
+import { BG_URL, user_AVATHAR } from "../utils/constants";
 
 const LogIn = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
@@ -89,7 +89,7 @@ const LogIn = () => {
       <Header />
       <div className="absolute w-full">
         <img
-          src="https://i.pinimg.com/1200x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg"
+          src={BG_URL}
           className="w-full"
           alt="logo"
         />
